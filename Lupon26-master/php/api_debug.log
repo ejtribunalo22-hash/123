@@ -1,0 +1,86 @@
+[2026-04-30 04:58:06] Request received: GET Action: get_all
+[2026-04-30 04:58:39] Request received: POST Action: save_member
+[2026-04-30 04:58:39] Save Member Data: {"id":1777517919534,"name":"Yolando B. Acharon","role":"Punong Barangay (Chairperson)","tel":"0953236778","date":"","exp":"","status":"Active"}
+[2026-04-30 04:58:39] SQL Error in save_member: SQLSTATE[HY093]: Invalid parameter number
+[2026-04-30 04:59:03] Request received: GET Action: get_all
+[2026-04-30 05:03:49] Request received: POST Action: save_member
+[2026-04-30 05:03:49] Save Member Data: {"id":1777518229542,"name":"Maria Lourdes C. Prado","role":"Lupon Clerk","tel":"09654533242","date":"","exp":"","status":"Active"}
+[2026-04-30 05:03:49] Save Member Success: 1777518229542
+[2026-04-30 05:04:02] Request received: DELETE Action: delete_member
+[2026-04-30 05:04:06] Request received: DELETE Action: delete_member
+[2026-04-30 05:04:26] Request received: POST Action: save_member
+[2026-04-30 05:04:26] Save Member Data: {"id":1777518266837,"name":"Yolando B. Acharon","role":"Lupon Clerk","tel":"09654363232","date":"","exp":"","status":"Active"}
+[2026-04-30 05:04:26] Save Member Success: 1777518266837
+[2026-04-30 05:04:36] Request received: POST Action: save_member
+[2026-04-30 05:04:36] Save Member Data: {"id":1777518266837,"name":"Yolando B. Acharon","role":"Punong Barangay (Chairperson)","tel":"09654363232","date":"","exp":"","status":"Active"}
+[2026-04-30 05:04:36] Save Member Success: 1777518266837
+[2026-04-30 05:07:20] Request received: GET Action: get_all
+[2026-04-30 05:09:00] Request received: POST Action: save_case
+[2026-04-30 05:09:00] Save Case Data: {"id":1777518540581,"caseNo":"001-2026","dateFiled":"2026-04-30","nature":"Public Scandal","status":"Pending","pangkat":"Yolando B. Acharon","docket":"","desc":"giignan ko niyag burikat","relief":"gusto nako matagaan hustisya","comp":{"last":"Marcos","first":"Bangag","mid":"W","age":"45","addr":"Barangay West","tel":"09654545454","civil":"Single"},"resp":{"last":"Duterte","first":"Sarah","mid":"G.","age":"23","addr":"Purok Silway","tel":"09545454544","civil":"Single"},"hdate":"","htime":"","hvenue":""}
+[2026-04-30 05:09:00] Save Case Success: 1777518540581
+[2026-04-30 07:10:01] Request received: GET Action: get_all
+[2026-04-30 07:19:15] Request received: GET Action: get_all
+[2026-04-30 07:27:15] Request received: GET Action: get_all
+[2026-04-30 07:29:41] Request received: POST Action: save_invitation
+[2026-04-30 07:30:57] Request received: POST Action: save_invitation
+[2026-04-30 07:43:04] Request received: GET Action: get_all
+[2026-04-30 07:43:25] Request received: POST Action: save_invitation
+[2026-04-30 07:43:33] Request received: DELETE Action: delete_invitation
+[2026-04-30 07:43:35] Request received: DELETE Action: delete_invitation
+[2026-04-30 07:43:40] Request received: POST Action: save_invitation
+[2026-04-30 07:43:47] Request received: GET Action: get_all
+[2026-04-30 07:44:23] Request received: POST Action: save_invitation
+[2026-04-30 07:46:09] Request received: GET Action: get_all
+[2026-04-30 07:46:12] Request received: GET Action: get_all
+[2026-04-30 07:46:14] Request received: GET Action: get_all
+[2026-04-30 07:46:15] Request received: GET Action: get_all
+[2026-04-30 07:46:23] Request received: POST Action: save_invitation
+[2026-04-30 07:46:34] Request received: DELETE Action: delete_invitation
+[2026-04-30 07:46:35] Request received: DELETE Action: delete_invitation
+[2026-04-30 07:46:36] Request received: DELETE Action: delete_invitation
+[2026-04-30 07:46:39] Request received: POST Action: save_invitation
+[2026-04-30 07:46:57] Request received: POST Action: save_invitation
+[2026-04-30 08:35:27] Request received: POST Action: save_invitation
+[2026-04-30 09:08:37] Request received: GET Action: get_all
+[2026-04-30 09:08:48] Request received: DELETE Action: delete_invitation
+[2026-04-30 09:08:49] Request received: DELETE Action: delete_invitation
+[2026-04-30 09:08:51] Request received: DELETE Action: delete_invitation
+[2026-04-30 09:08:53] Request received: POST Action: save_invitation
+[2026-04-30 09:18:18] Request received: GET Action: get_all
+[2026-04-30 09:18:30] Request received: DELETE Action: delete_invitation
+[2026-04-30 09:18:37] Request received: POST Action: save_invitation
+[2026-04-30 09:27:19] Request received: GET Action: get_all
+[2026-04-30 09:27:22] Request received: GET Action: get_all
+[2026-04-30 09:27:34] Request received: DELETE Action: delete_invitation
+[2026-04-30 09:27:37] Request received: POST Action: save_invitation
+[2026-04-30 09:30:43] Request received: POST Action: save_invitation
+[2026-04-30 09:32:10] Request received: DELETE Action: delete_invitation
+[2026-04-30 09:32:12] Request received: DELETE Action: delete_invitation
+[2026-04-30 09:46:59] Request received: POST Action: save_invitation
+[2026-04-30 10:07:27] Request received: POST Action: save_invitation
+[2026-04-30 10:12:25] Request received: DELETE Action: delete_invitation
+[2026-04-30 10:12:26] Request received: DELETE Action: delete_invitation
+[2026-04-30 10:12:28] Request received: DELETE Action: delete_invitation
+[2026-04-30 10:14:19] Request received: GET Action: get_all
+[2026-04-30 10:16:47] Request received: POST Action: save_invitation
+[2026-04-30 10:27:08] Request received: GET Action: get_all
+[2026-04-30 10:28:06] Request received: POST Action: save_invitation
+[2026-05-04 02:38:20] Request received: GET Action: get_all
+[2026-05-04 02:38:51] Request received: DELETE Action: delete_invitation
+[2026-05-04 02:40:38] Request received: GET Action: get_all
+[2026-05-04 02:44:55] Request received: POST Action: save_invitation
+[2026-05-04 03:12:03] Request received: GET Action: get_all
+[2026-05-04 03:17:31] Request received: GET Action: get_all
+[2026-05-04 03:22:33] Request received: GET Action: get_all
+[2026-05-04 03:23:31] Request received: GET Action: get_all
+[2026-05-04 03:25:22] Request received: GET Action: get_all
+[2026-05-04 03:29:32] Request received: GET Action: get_all
+[2026-05-04 03:32:15] Request received: GET Action: get_all
+[2026-05-04 03:33:44] Request received: GET Action: get_all
+[2026-05-04 03:34:12] Request received: POST Action: save_invitation
+[2026-05-04 03:34:24] Request received: POST Action: save_invitation
+[2026-05-04 03:34:39] Request received: POST Action: save_invitation
+[2026-05-04 03:36:22] Request received: POST Action: save_invitation
+[2026-05-04 03:36:27] Request received: POST Action: save_invitation
+[2026-05-04 03:36:49] Request received: POST Action: save_invitation
+[2026-05-04 07:00:11] Request received: POST Action: save_invitation

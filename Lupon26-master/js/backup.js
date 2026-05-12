@@ -1,0 +1,197 @@
+/**
+ * js/backup.js
+ * ──────────────────────────────────────────────────────
+ * Backup & Restore — export all data to JSON, import
+ * from a JSON backup file, and clear all data.
+ * ──────────────────────────────────────────────────────
+ */
+
+let restoreData = null;   // Holds parsed backup file pending confirmation
+
+/**
+ * Show a notification without assuming a global `toast()` helper exists.
+ * Falls back to `alert()` when toast support is unavailable.
+ * @param {string} message
+ * @param {string} [color]
+ */
+function notify(message, color) {
+  if (typeof toast === 'function') {
+    toast(message, color);
+    return;
+  }
+
+  // Strip emoji for alert dialogs so the fallback stays readable.
+  alert(String(message).replace(/[^\u0000-\u007F]+/g, '').trim());
+}
+
+
+/* 
+   SUMMARY
+*/
+
+/** Update the data summary panel on the Backup page. */
+function updateBackupSummary() {
+  document.getElementById('backup-summary').innerHTML =
+    `Cases: <b>${cases.length}</b>
+     &nbsp;|&nbsp; Hearings: <b>${hearings.length}</b>
+     &nbsp;|&nbsp; Settlements: <b>${settlements.length}</b>
+     &nbsp;|&nbsp; Members: <b>${members.length}</b>`;
+}
+
+
+/* 
+   EXPORT
+ */
+
+/** Export all data to a timestamped .json backup file. */
+function exportBackup() {
+  const data = {
+    version:    2,
+    exportedAt: new Date().toISOString(),
+    brgy:       cfg.brgy,
+    cases,
+    hearings,
+    settlements,
+    members
+  };
+
+  const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+  const url  = URL.createObjectURL(blob);
+  const a    = document.createElement('a');
+  const date = new Date().toISOString().split('T')[0];
+
+  a.href     = url;
+  a.download = `Lupon-Backup-${cfg.brgy.replace(/\s+/g, '-')}-${date}.json`;
+  a.click();
+  URL.revokeObjectURL(url);
+
+  notify('💾 Backup exported!');
+}
+
+
+/* 
+   IMPORT / RESTORE
+ */
+
+/**
+ * Read a selected .json file and show a preview before restoring.
+ * @param {Event} event - File input change event
+ */
+function previewRestore(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+
+  const reader = new FileReader();
+
+  reader.onload = function (e) {
+    try {
+      const data = JSON.parse(e.target.result);
+
+      // Validate minimum structure
+      if (!data.cases || !data.hearings) {
+        notify('⚠️ Invalid backup file.', '#b22222');
+        return;
+      }
+
+      restoreData = data;
+
+      // Show preview panel
+      document.getElementById('restore-fname').textContent = file.name;
+      document.getElementById('restore-details').innerHTML =
+        `Cases: <b>${data.cases.length}</b>
+         &nbsp;|&nbsp; Hearings: <b>${data.hearings.length}</b>
+         &nbsp;|&nbsp; Settlements: <b>${(data.settlements || []).length}</b>
+         &nbsp;|&nbsp; Members: <b>${(data.members || []).length}</b><br>
+         Exported:
+         <b>${data.exportedAt
+               ? new Date(data.exportedAt).toLocaleString('en-PH')
+               : 'Unknown date'}</b>
+         from <b>${data.brgy || 'Unknown barangay'}</b>`;
+
+      document.getElementById('restore-preview').style.display = 'block';
+      document.getElementById('restore-btn').style.display     = 'block';
+
+    } catch (err) {
+      notify('⚠️ Could not read file. Ensure it is a valid .json backup.', '#b22222');
+    }
+  };
+
+  reader.readAsText(file);
+}
+
+
+async function confirmRestore() {
+  if (!restoreData) return;
+
+  if (!confirm(
+    'How do you want to restore?\n\n' +
+    'OK = MERGE (adds new records, keeps existing ones)\n' +
+    'Cancel = do nothing'
+  )) return;
+
+  // Merge — only add records whose id doesn't already exist
+  const mergeArray = (existing, incoming) => {
+    const existingIds = new Set(existing.map(x => x.id));
+    const newItems = incoming.filter(x => !existingIds.has(x.id));
+    return { merged: [...existing, ...newItems], added: newItems };
+  };
+
+  const resCases = mergeArray(cases,       restoreData.cases       || []);
+  const resHear  = mergeArray(hearings,    restoreData.hearings    || []);
+  const resSettle = mergeArray(settlements, restoreData.settlements || []);
+  const resMem   = mergeArray(members,     restoreData.members     || []);
+
+  cases       = resCases.merged;
+  hearings    = resHear.merged;
+  settlements = resSettle.merged;
+  members     = resMem.merged;
+
+  // Save new items to DB
+  for (const c of resCases.added)  await apiPost('save_case', c);
+  for (const h of resHear.added)   await apiPost('save_hearing', h);
+  for (const s of resSettle.added) await apiPost('save_settlement', s);
+  for (const m of resMem.added)    await apiPost('save_member', m);
+
+  persist();
+
+  restoreData = null;
+  document.getElementById('restore-preview').style.display = 'none';
+  document.getElementById('restore-btn').style.display     = 'none';
+  document.getElementById('restore-file').value            = '';
+
+  updateBackupSummary();
+  notify('Data merged successfully!');
+}
+
+
+/* 
+   CLEAR ALL DATA
+ */
+
+/** Permanently delete all stored data after double confirmation. */
+async function clearAllData() {
+  if (!confirm(
+    'DELETE ALL DATA?\n\n' +
+    'This will permanently erase all cases, hearings, settlements, and members.\n' +
+    'This CANNOT be undone. Are you absolutely sure?'
+  )) return;
+
+  if (!confirm('Final confirmation: permanently delete everything?')) return;
+
+  // Clear DB
+  const res = await apiPost('clear_data', {});
+  if (res.error) {
+    notify('⚠️ Error clearing database: ' + res.error, '#b22222');
+    return;
+  }
+
+  cases       = [];
+  hearings    = [];
+  settlements = [];
+  members     = [];
+
+  persist();
+  updateBackupSummary();
+  renderDashboard();
+  notify('All data cleared.', '#b22222');
+}
