@@ -25,3 +25,29 @@ This system is designed to run locally using **XAMPP**.
 ---
 
 ## 📂 Project Structure
+
+---✔HOW TO RUN THE SYSTEM---
+
+## 👤 Login (if applicable)
+Default credentials depend on database setup.
+
+---
+
+## ⚠️ Notes
+
+- This system runs locally using XAMPP.
+- Make sure Apache and MySQL are running.
+- Ensure database is properly imported before using the system.
+- Keep file structure intact to avoid errors.
+
+---
+
+## 🧑‍💻 Author
+
+Developed for educational and local system use.
+
+---
+
+## 📜 License
+
+For academic / non-commercial use only.
